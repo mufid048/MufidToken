@@ -40,4 +40,14 @@ contract MufidTokenSale {
         //Trigger Sell event
         emit Sell(msg.sender, _numberOfTokens);
     }
+
+    //Ending Token MufidTokenSale
+    function endSale() public {
+        //require admin
+        require(msg.sender == admin);
+        // Transfer remaining dapp tokens to admin
+        require(tokenContract.transfer(admin,tokenContract.balanceOf(address(this))));
+        //Destroy contract
+        selfdestruct(payable(admin));
+    }
 }
